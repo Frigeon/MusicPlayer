@@ -178,9 +178,9 @@ $(document).ready(function(){
 		var loadTrack = function(id) {
 			
 			$('.plSel').removeClass('plSel');
-			$('#plUL li:eq(' + id + ')').addClass('plSel');
+			$('#plUL li:eq(' + (id+1) + ')').addClass('plSel');
 			console.log($('#plUL li:eq('+id+')'));
-			npTitle.text(tracks[id].name);
+			npTitle.text(tracks[id].location);
 			index = id;
 			source.prop('src', mediaPath + tracks[id].location).prop('type', 'audio/mpeg');
 			audio[0].load();
@@ -216,7 +216,7 @@ $(document).ready(function(){
 			<div id="plHead">
 				<div class="plHeadNum">Track</div>
 				<div class="plHeadTitle">Title</div>
-				<div class="plLength">Length</div>
+				<!--<div class="plLength">Length</div>-->
 			</div>
 			<ul id="plUL">
 			<?php
@@ -224,7 +224,7 @@ $(document).ready(function(){
 				foreach($songList as $song)
 				{
 					list($name, $location) = explode(':', $song);
-					echo "<li>\n\t<div class=\"plItem\">\n\t\t<div class=\"plNum\">".($count+1)."</div>\n\t\t<div class=\"plTitle\">$name</div>\n\t</div>\n</li>";
+					echo "<li>\n\t<div class=\"plItem\">\n\t\t<div class=\"plNum\">".(($count < 9) ? ('0'.($count+1)) : ($count+1))."</div>\n\t\t<div class=\"plTitle\">$name</div>\n\t</div>\n</li>";
 					$count++;
 				}
 			?>

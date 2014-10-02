@@ -11,3 +11,38 @@
 #audio0, #extraControls {
 	text-align: center;
 }
+
+#plUL {
+	list-style: none;
+}
+
+.plNum {
+	float: left;
+	margin-right: 50px;
+}
+
+.plTitle {
+	float: left;
+}
+
+.plItem {
+	clear: both;
+}
+
+.plHeadNum {
+	float: left;
+	margin:0 27px 0 40px;
+}
+
+.plHeadTitle {
+	float: left;
+	
+}
+
+#plHead {
+	clear: both;
+}
+
+.plSel{
+	background-color: #FFC936;
+}
