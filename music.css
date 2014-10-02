@@ -1,0 +1,13 @@
+#nowPlay {
+	border: 5px solid black;
+	display: block;
+	margin-bottom: 10px;
+	padding-left: 30px;
+	padding-bottom: 10px;
+	padding-top:0;
+	text-align: center;
+}
+
+#audio0, #extraControls {
+	text-align: center;
+}
