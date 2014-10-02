@@ -89,6 +89,8 @@ $songList = shuffleSongs($directories);
 <html>
 <head>
 <link href="music.css" rel="stylesheet" type="text/css" />
+<link href="vendor/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="vendor/js.bootstrap.min.js"></script>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -180,7 +182,9 @@ $(document).ready(function(){
 			$('.plSel').removeClass('plSel');
 			$('#plUL li:eq(' + (id+1) + ')').addClass('plSel');
 			console.log($('#plUL li:eq('+id+')'));
-			npTitle.text(tracks[id].location);
+			var locations = tracks[id].location.split('\\');
+			var end = locations.length-1;
+			npTitle.html(locations[0] + ' <span class=\'glyphicon glyphicon-chevron-right\'></span> ' + locations[end]);
 			index = id;
 			source.prop('src', mediaPath + tracks[id].location).prop('type', 'audio/mpeg');
 			audio[0].load();
