@@ -88,8 +88,8 @@ $songList = shuffleSongs($directories);
 ?>
 <html>
 <head>
-<link href="music.css" rel="stylesheet" type="text/css" />
 <link href="vendor/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="music.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="vendor/js.bootstrap.min.js"></script>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript">
@@ -105,7 +105,7 @@ $(document).ready(function(){
 							$count++;
 						} ?>
 					];
-					
+	
 	if(supportsAudio) {
 		var index = 0;
 		
@@ -180,8 +180,8 @@ $(document).ready(function(){
 		var loadTrack = function(id) {
 			
 			$('.plSel').removeClass('plSel');
-			$('#plUL li:eq(' + (id+1) + ')').addClass('plSel');
-			console.log($('#plUL li:eq('+id+')'));
+			$('#plUL li:eq(' + (id) + ')').addClass('plSel');
+			//console.log($('#plUL li:eq('+(id+1)+')'));
 			var locations = tracks[id].location.split('\\');
 			var end = locations.length-1;
 			npTitle.html(locations[0] + ' <span class=\'glyphicon glyphicon-chevron-right\'></span> ' + locations[end]);
@@ -202,25 +202,26 @@ $(document).ready(function(){
 </head>
 <body>
 <div id="cwrap">
-	<div id="nowPlay">
+	<div id="nowPlay" class="col-sm-offset-2 col-sm-8">
 		<h3 id="npAction">Paused:</h3>
 		<div id="npTitle"></div>
 	</div>
-	<div id="audiowrap">
-		<div id="audio0">
-			<audio id="audio1" controls="controls" width="300">
-				<source src type />
-				Your Browser does not support HTML5 Audio Tag.
-			</audio>
-		</div>
-		<div id="extraControls">
-			<button id="btnPrev" class="ctrlbtn">|&lt;&lt; Prev Track</button> <button id="btnNext" class="ctrlbtn">Next Track &gt;&gt;|</button>
+	<div id="audiowrap" class="col-sm-offset-2 col-sm-8">
+		<div id="player">
+			<div id="audio0" class="col-sm-12">
+				<audio id="audio1" controls="controls" width="300">
+					<source src type />
+					Your Browser does not support HTML5 Audio Tag.
+				</audio>
+			</div>
+			<div id="extraControls">
+				<button id="btnPrev" class="ctrlbtn btn btn-primary">|&lt;&lt;<!--Prev Track--></button> <button id="btnNext" class="ctrlbtn btn btn-primary"><!--Next Track-->&gt;&gt;|</button>
+			</div>
 		</div>
 		<div id="plwrap">
 			<div id="plHead">
 				<div class="plHeadNum">Track</div>
 				<div class="plHeadTitle">Title</div>
-				<!--<div class="plLength">Length</div>-->
 			</div>
 			<ul id="plUL">
 			<?php
@@ -236,15 +237,5 @@ $(document).ready(function(){
 		</div>
 	</div>
 </div>
-<!--<audio controls preload="auto">
-<?php
-/*	foreach($songList as $song)
-	{
-		list($name, $location) = explode(':', $song);
-		echo "\t".'<source src=\'music\\'.$location.'\' type=\'audio/mpeg\'>'."\n";
-	}
-	echo 'Get an html5 compatible browser!';*/
-?>
-</audio>-->
 </body>
 </html>

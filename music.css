@@ -1,19 +1,53 @@
+body {
+	background-color: black;
+}
+
 #nowPlay {
-	border: 5px solid black;
+	border: 5px solid #111111;
 	display: block;
 	margin-bottom: 10px;
 	padding-left: 30px;
 	padding-bottom: 10px;
 	padding-top:0;
 	text-align: center;
+	background-color: black;
 }
 
 #audio0, #extraControls {
 	text-align: center;
 }
 
+#player {
+	border: 5px solid #111111;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+#plwrap {
+	border: 5px solid #111111;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-top: 10px;
+}
+
 #plUL {
 	list-style: none;
+}
+
+#audiowrap {
+	background-color: black;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+#cwrap {
+	background-color: black;
+	color: white;
+}
+
+#audio1 {
+	background-color: black;
+	color: red;
 }
 
 .plNum {
@@ -29,6 +63,18 @@
 	clear: both;
 }
 
+ul li{
+	cursor: pointer;
+}
+
+ul li:hover{
+	background-color: #ADADAD;
+}
+
+li {
+	height: 20px;
+}
+
 .plHeadNum {
 	float: left;
 	margin:0 27px 0 40px;
@@ -41,8 +87,20 @@
 
 #plHead {
 	clear: both;
+	height: 20px;
 }
 
 .plSel{
-	background-color: #FFC936;
+	background-color: rgba(9, 4, 213, 0.7);
+	border: 1px solid gray;
+}
+
+.btn-primary {
+	background-color: #111111;
+	border-color: #010101;
+}
+
+.btn-primary:hover {
+	background-color: #333333;
+	border-color: #131313;
 }
