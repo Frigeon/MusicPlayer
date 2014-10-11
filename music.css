@@ -2,6 +2,10 @@ body {
 	background-color: black;
 }
 
+/**
+  * Header
+  **/
+
 #nowPlay {
 	border: 5px solid #111111;
 	display: block;
@@ -13,6 +17,10 @@ body {
 	background-color: black;
 }
 
+/**
+  * Player
+  **/
+
 #audio0, #extraControls {
 	text-align: center;
 }
@@ -21,13 +29,7 @@ body {
 	border: 5px solid #111111;
 	padding-top: 5px;
 	padding-bottom: 5px;
-}
-
-#plwrap {
-	border: 5px solid #111111;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	margin-top: 10px;
+	background-color: black;
 }
 
 #plUL {
@@ -35,7 +37,6 @@ body {
 }
 
 #audiowrap {
-	background-color: black;
 	padding-left: 0;
 	padding-right: 0;
 }
@@ -49,6 +50,10 @@ body {
 	background-color: black;
 	color: red;
 }
+
+/**
+  * Playlist
+  **/
 
 .plNum {
 	float: left;
@@ -67,12 +72,24 @@ ul li{
 	cursor: pointer;
 }
 
-ul li:hover{
-	background-color: #ADADAD;
+ul li:hover {
+	background-color: #333333;
+	border-color: #111111;
+}
+
+ul li .plSel:hover {
+	background-color: #454545;
+	border-color: #232323;
 }
 
 li {
 	height: 20px;
+	border: 1px solid black;
+}
+
+.plSel{
+	background-color: rgba(9, 4, 213, 0.7);
+	border: 1px solid gray;
 }
 
 .plHeadNum {
@@ -82,7 +99,6 @@ li {
 
 .plHeadTitle {
 	float: left;
-	
 }
 
 #plHead {
@@ -90,10 +106,17 @@ li {
 	height: 20px;
 }
 
-.plSel{
-	background-color: rgba(9, 4, 213, 0.7);
-	border: 1px solid gray;
+#plwrap {
+	border: 5px solid #111111;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-top: 10px;
+	background-color: black;
 }
+
+/**
+  * Buttons
+  **/
 
 .btn-primary {
 	background-color: #111111;
