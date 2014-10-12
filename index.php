@@ -90,8 +90,8 @@ $songList = shuffleSongs($directories);
 <head>
 <link href="vendor/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="music.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="vendor/js.bootstrap.min.js"></script>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="vendor/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	var supportsAudio = !!document.createElement('audio').canPlayType;
@@ -107,6 +107,12 @@ $(document).ready(function(){
 					];
 	
 	if(supportsAudio) {
+		var contextClass = (window.AudioContext ||
+			window.webkitAudioContext ||
+			window.mozAudioContext ||
+			window.oAudioContext ||
+			window.msAudioContext);
+
 		var index = 0;
 		
 		var playing = false;
@@ -120,6 +126,28 @@ $(document).ready(function(){
 		var npTitle = $('#npTitle');
 		
 		var audio = $('#audio1');
+		
+		if (contextClass) {
+			// Web Audio API is available.
+			var context = new contextClass();
+			
+			var source = context.createMediaElementSource(audio[0]); //Use the audio element on the page as the audio source.
+			
+//			var bufferloader = new BufferLoader(context, [audio.prop('src')], function(bufferList){
+//				var source = context.createBufferSource();
+				
+//				source.buffer = bufferList[0];
+				
+//				source.connect(context.destination);
+//				source.start(0);
+//			});
+			
+			source.connect(context.destination); //Now connected to speakers through Web Audio API
+			
+		} else {
+			// Web Audio API is not available. Ask the user to use a supported browser.
+			print("Your Browser does not support the Web Audio API.");
+		}
 		
 		audio.on('play', function() {
 			playing = true;
