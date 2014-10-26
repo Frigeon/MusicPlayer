@@ -114,9 +114,13 @@ li {
 	background-color: black;
 }
 
+#spanWrapTop, #spanWrapBottom{
+	text-align: center;
+}
+
 /**
-  * Buttons
-  **/
+ * Buttons
+ */
 
 .btn-primary {
 	background-color: #111111;
@@ -127,3 +131,34 @@ li {
 	background-color: #333333;
 	border-color: #131313;
 }
+
+.selected{
+	background-color: #20237A;
+}
+
+/**
+ * Pagination
+ */
+ 
+ .pagination>li>a, .pagination>li>span {
+	color: white;
+	background-color: #111111;
+	border-color: #010101;
+ }
+ 
+ .pagination>li>a:hover, .pagination>li>span:hover {
+	background-color: #333333;
+	border-color: #131313;
+	color: gray;
+ }
+ 
+  .pagination>li.active>a, .pagination>li.active>span{
+	background-color: #555555;
+	border-color: #131313;
+ }
+ 
+ .pagination>li.active>a:hover, .pagination>li.active>span:hover {
+	background-color: #666666;
+	border-color: #131313;
+	color: gray;
+ }

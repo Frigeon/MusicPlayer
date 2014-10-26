@@ -92,10 +92,17 @@ $songList = shuffleSongs($directories);
 <link href="music.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" src="vendor/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/Pagination.js"></script>
 <script type="text/javascript">
+
+var tracks = Array();
+var index = 0;
+var playTrack;
+
 $(document).ready(function(){
 	var supportsAudio = !!document.createElement('audio').canPlayType;
-	var tracks = [<?php  $count = 0;
+	var perPage = 30;
+	tracks = [<?php  $count = 0;
 						$length = count($songList);
 						foreach($songList as $song){
 							if($count == 0)
@@ -105,6 +112,8 @@ $(document).ready(function(){
 							$count++;
 						} ?>
 					];
+					
+	Paginate(tracks, perPage, 1, index);
 	
 	if(supportsAudio) {
 		var contextClass = (window.AudioContext ||
@@ -112,8 +121,6 @@ $(document).ready(function(){
 			window.mozAudioContext ||
 			window.oAudioContext ||
 			window.msAudioContext);
-
-		var index = 0;
 		
 		var playing = false;
 		
@@ -199,7 +206,7 @@ $(document).ready(function(){
 		});
 		
 		var li = $('#plUL li').on('click', function() {
-			var id = parseInt($(this).index());
+			var id = parseInt($(this).find('.plNum').attr('id'));
 			if(id !== index) {
 				playTrack(id);
 			}
@@ -207,18 +214,23 @@ $(document).ready(function(){
 		
 		var loadTrack = function(id) {
 			
+			console.log(id);
+			
 			$('.plSel').removeClass('plSel');
-			$('#plUL li:eq(' + (id) + ')').addClass('plSel');
-			//console.log($('#plUL li:eq('+(id+1)+')'));
+			$('#'+ id).parents('li').addClass('plSel');
+			
 			var locations = tracks[id].location.split('\\');
 			var end = locations.length-1;
+			
 			npTitle.html(locations[0] + ' <span class=\'glyphicon glyphicon-chevron-right\'></span> ' + locations[end]);
+			var title = 'HallsOfChain Music';
+			$('title').text(title + ' > ' + locations[0] + ' > ' + locations[end]);
 			index = id;
 			source.prop('src', mediaPath + tracks[id].location).prop('type', 'audio/mpeg');
 			audio[0].load();
 		};
 		
-		var playTrack = function(id) {
+		playTrack = function(id) {
 			loadTrack(id);
 			audio[0].play();
 		};
@@ -227,6 +239,7 @@ $(document).ready(function(){
 	}
 });
 </script>
+<title>HallsOfChain Music</title>
 </head>
 <body>
 <div id="cwrap">
@@ -246,22 +259,24 @@ $(document).ready(function(){
 				<button id="btnPrev" class="ctrlbtn btn btn-primary">|&lt;&lt;<!--Prev Track--></button> <button id="btnNext" class="ctrlbtn btn btn-primary"><!--Next Track-->&gt;&gt;|</button>
 			</div>
 		</div>
-		<div id="plwrap">
+		<div id="plwrap" class="col-sm-12">
+			<span id="spanWrapTop" class="col-sm-12"></span>
 			<div id="plHead">
 				<div class="plHeadNum">Track</div>
 				<div class="plHeadTitle">Title</div>
 			</div>
-			<ul id="plUL">
+			<ul id="plUL" col-sm-12>
 			<?php
 				$count = 0;
 				foreach($songList as $song)
 				{
 					list($name, $location) = explode(':', $song);
-					echo "<li>\n\t<div class=\"plItem\">\n\t\t<div class=\"plNum\">".(($count < 9) ? ('0'.($count+1)) : ($count+1))."</div>\n\t\t<div class=\"plTitle\">$name</div>\n\t</div>\n</li>";
+					echo "<li>\n\t<div class=\"plItem\">\n\t\t<div class=\"plNum\" id=\"".$count."\">".(($count < 9) ? ('0'.($count+1)) : ($count+1))."</div>\n\t\t<div class=\"plTitle\">$name</div>\n\t</div>\n</li>";
 					$count++;
 				}
 			?>
 			</ul>
+			<span id="spanWrapBottom" class="col-sm-12"></span>
 		</div>
 	</div>
 </div>
