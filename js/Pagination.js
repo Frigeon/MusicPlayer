@@ -9,7 +9,7 @@ function Paginate(list, perPage, page, index)
 	}
 	
 	// Number of page links in the begin and end of whole range
-	var count_out = 5;
+	var count_out = 4;
 	// Number of page links on each side of current page
 	var count_in = 3;
 	
@@ -72,10 +72,10 @@ function Paginate(list, perPage, page, index)
 	var linksHTML = $(document.createElement('div')).addClass('pagination');
 	linksHTML.append($(document.createElement('ul')).addClass('pagination'));
 	
-	var first = $(document.createElement('li')).append($(document.createElement('span')).addClass('FakeLink').css({'font-size':'12px'}).addClass('FirstPage').attr('onclick', 'Paginate(tracks, 30, 1, index)').text('First Page'));
-	var last = $(document.createElement('li')).append($(document.createElement('span')).addClass('FakeLink').css({'font-size':'12px'}).addClass('LastPage').attr('onclick', 'Paginate(tracks, 30, '+NumPages+', index)').text('Last Page'));
-	var prev = $(document.createElement('li')).append($(document.createElement('span')).addClass('FakeLink').css({'font-size':'12px'}).addClass('PreviousPage').attr('onclick', 'Paginate(tracks, 30, '+(page-1 > 0 ? page-1 : NumPages)+', index)').text('|<< Page'));
-	var next = $(document.createElement('li')).append($(document.createElement('span')).addClass('FakeLink').css({'font-size':'12px'}).addClass('NextPage').attr('onclick', 'Paginate(tracks, 30, '+((page+1) < (NumPages+1) ? page+1 : 1)+', index)').text('Page >>|'));
+	var first = $(document.createElement('li')).append($(document.createElement('span')).addClass('FakeLink').css({'font-size':'12px'}).addClass('FirstPage').attr('onclick', 'Paginate(tracks,' + perPage + ', 1, index)').text('First Page'));
+	var last = $(document.createElement('li')).append($(document.createElement('span')).addClass('FakeLink').css({'font-size':'12px'}).addClass('LastPage').attr('onclick', 'Paginate(tracks, ' + perPage + ', '+NumPages+', index)').text('Last Page'));
+	var prev = $(document.createElement('li')).append($(document.createElement('span')).addClass('FakeLink').css({'font-size':'12px'}).addClass('PreviousPage').attr('onclick', 'Paginate(tracks, ' + perPage + ', '+(page-1 > 0 ? page-1 : NumPages)+', index)').text('|<< Page'));
+	var next = $(document.createElement('li')).append($(document.createElement('span')).addClass('FakeLink').css({'font-size':'12px'}).addClass('NextPage').attr('onclick', 'Paginate(tracks, ' + perPage + ', '+((page+1) < (NumPages+1) ? page+1 : 1)+', index)').text('Page >>|'));
 	
 	var paginationObject = linksHTML.find('ul.pagination');
 	paginationObject.append(first);

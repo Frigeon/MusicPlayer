@@ -101,7 +101,7 @@ var playTrack;
 
 $(document).ready(function(){
 	var supportsAudio = !!document.createElement('audio').canPlayType;
-	var perPage = 30;
+	var perPage = 20;
 	tracks = [<?php  $count = 0;
 						$length = count($songList);
 						foreach($songList as $song){
@@ -172,6 +172,11 @@ $(document).ready(function(){
 				audio[0].pause();
 				index = 0;
 				loadTrack(index);
+			}
+			
+			if(index % perPage == 0)
+			{
+				Paginate(tracks, perPage, parseInt(index / perPage)+1, index);
 			}
 		});
 		

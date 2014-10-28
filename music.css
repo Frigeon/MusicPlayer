@@ -162,3 +162,8 @@ li {
 	border-color: #131313;
 	color: gray;
  }
+ 
+ .pagination>li,.pagination>li.active, .pagination>li:hover, .pagination>li.active:hover{
+	border-width: 0;
+ }
+ 
