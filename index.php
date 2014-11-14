@@ -1,90 +1,26 @@
 <!DOCTYPE html>
 <?php 
 
-function listAllDirectories($Directory, $main = false)
-{
-	$structure = array();
-	$count = 0;
-	
-	foreach($Directory as $entry)
-	{
-		$subPath = $Directory->getSubPathname();
-		if(substr($subPath, -1) != '.')
-		{
-			$structure[$subPath] = array();
-			
-			if($Directory->hasChildren())
-			{
-				$children = $Directory->getChildren();
-				$structure[$subPath] = listAllDirectories($children);
-			} else {
-				unset($structure[$subPath]);
-				$filename = $subPath;
-				while(strpos($filename, '\\')){
-					$filename = substr($filename, strpos($filename, '\\')+1);
-				}
-				if(substr($filename, -3) == 'mp3')
-					$structure[] = $filename.':'.$subPath;
-			}
-		}
-		$count++;
-	}
-	return $structure;
-}
+require_once('List.php');
 
-function shuffleSongs($songs)
-{
-	$songList = array();
-	if(is_array($songs))
-	{
-		foreach($songs as $song)
-		{
-			if(is_array($song))
-			{
-				foreach($song as $son)
-				{
-					if(is_array($son))
-					{
-						foreach($son as $so)
-						{
-							if(is_array($so))
-							{
-								foreach($so as $s)
-								{
-									if(is_array($s))
-									{
-										$songList += shuffleSongs($s);
-									} else {
-										$songList[] = $s;
-									}
-								}
-							} else {
-								$songList[] = $so;
-							}
-						}
-					} else {
-						$songList[] = $son;
-					}
-				}
-			} else {
-				$songList[] = $song;
-			}
-		}
-	} else {
-		return false;
-	}
-	shuffle($songList);
-	
-	return $songList;
-}
-
-$Directory = new RecursiveDirectoryIterator('.\Music', true);
+$Directory = new RecursiveDirectoryIterator('./Music', true);
 $directories = listAllDirectories($Directory);
 //echo '<pre>';
 //var_dump($directories);
 //echo '</pre>';
 $songList = shuffleSongs($directories);
 //shuffle($songList);
+
+$count = 0;
+$length = count($songList);
+$list = '';
+foreach($songList as $song){
+	if($count == 0)
+		$list = "\t";
+	list($name, $location) = explode(':', addslashes(str_replace('\\', '/', $song))); 
+	$list .= '{\'track\':'.$count.', \'name\':\''.$name.'\', \'location\':\''.$location.'\'}, '."\n\t\t\t\t\t";
+	$count++;
+}
 ?>
 <html>
 <head>
@@ -102,16 +38,7 @@ var playTrack;
 $(document).ready(function(){
 	var supportsAudio = !!document.createElement('audio').canPlayType;
 	var perPage = 20;
-	tracks = [<?php  $count = 0;
-						$length = count($songList);
-						foreach($songList as $song){
-							if($count == 0)
-								echo "\t";
-							list($name, $location) = explode(':', addslashes($song)); 
-							echo '{\'track\':'.$count.', \'name\':\''.$name.'\', \'location\':\''.$location.'\'}, '."\n\t\t\t\t\t";
-							$count++;
-						} ?>
-					];
+	tracks = [<?= $list ?>];
 					
 	Paginate(tracks, perPage, 1, index);
 	
@@ -124,7 +51,7 @@ $(document).ready(function(){
 		
 		var playing = false;
 		
-		var mediaPath = 'music\\';
+		var mediaPath = 'music/';
 		
 		var trackCount = tracks.length;
 		
