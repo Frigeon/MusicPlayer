@@ -2,8 +2,7 @@
 <?php 
 
 require_once('List.php');
-
-$Directory = new RecursiveDirectoryIterator('./Music', true);
+$Directory = new RecursiveDirectoryIterator('./RegMusic', true);
 $directories = listAllDirectories($Directory);
 //echo '<pre>';
 //var_dump($directories);
@@ -17,8 +16,8 @@ $list = '';
 foreach($songList as $song){
 	if($count == 0)
 		$list = "\t";
-	list($name, $location) = explode(':', addslashes(str_replace('\\', '/', $song))); 
-	$list .= '{\'track\':'.$count.', \'name\':\''.$name.'\', \'location\':\''.$location.'\'}, '."\n\t\t\t\t\t";
+	list($name, $location) = explode(':', addslashes(str_replace('\\', '/', $song)));
+	$list .= '{\'track\':'.$count.', \'name\':\''.$name.'\', \'location\':\''.str_replace('%5C', '', str_replace('+', '%20', str_replace('%2F', '/', urlencode($location)))).'\'}, '."\n\t\t\t\t\t";
 	$count++;
 }
 ?>
@@ -51,7 +50,7 @@ $(document).ready(function(){
 		
 		var playing = false;
 		
-		var mediaPath = 'music/';
+		var mediaPath = 'regmusic/';
 		
 		var trackCount = tracks.length;
 		
@@ -144,19 +143,16 @@ $(document).ready(function(){
 			}
 		});
 		
-		var loadTrack = function(id) {
-			
-			console.log(id);
-			
+		var loadTrack = function(id) {			
 			$('.plSel').removeClass('plSel');
 			$('#'+ id).parents('li').addClass('plSel');
 			
-			var locations = tracks[id].location.split('\\');
+			var locations = tracks[id].location.split('/');
 			var end = locations.length-1;
 			
-			npTitle.html(locations[0] + ' <span class=\'glyphicon glyphicon-chevron-right\'></span> ' + locations[end]);
+			npTitle.html(decodeURI(locations[0] + ' <span class=\'glyphicon glyphicon-chevron-right\'></span> ' + locations[end]).replace('%23', '#'));
 			var title = 'HallsOfChain Music';
-			$('title').text(title + ' > ' + locations[0] + ' > ' + locations[end]);
+			$('title').text(decodeURI(title + ' > ' + locations[0] + (location[end-1] != location[0] ? ' - ' + location[end-1] : '' ) + ' > ' + locations[end]).replace('%23', '#'));
 			index = id;
 			source.prop('src', mediaPath + tracks[id].location).prop('type', 'audio/mpeg');
 			audio[0].load();
@@ -203,7 +199,7 @@ $(document).ready(function(){
 				foreach($songList as $song)
 				{
 					list($name, $location) = explode(':', $song);
-					echo "<li>\n\t<div class=\"plItem\">\n\t\t<div class=\"plNum\" id=\"".$count."\">".(($count < 9) ? ('0'.($count+1)) : ($count+1))."</div>\n\t\t<div class=\"plTitle\">$name</div>\n\t</div>\n</li>";
+					echo "<li>\n\t<div class=\"plItem\">\n\t\t<div class=\"plNum\" id=\"".$count."\">".(($count < 9) ? ('0'.($count+1)) : ($count+1)) . "</div>\n\t\t<div class=\"plTitle\">" . str_replace('%5D', ']', str_replace('%5B', '[', str_replace('%23', '#', $name))) . "</div>\n\t</div>\n</li>";
 					$count++;
 				}
 			?>
